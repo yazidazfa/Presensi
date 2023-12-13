@@ -17,9 +17,15 @@ namespace Presensi
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_login_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void tb_password_TextChanged(object sender, EventArgs e)
+        {
+            tb_password.ForeColor = Color.Black;
+            tb_password.PasswordChar = '*';
         }
     }
 }

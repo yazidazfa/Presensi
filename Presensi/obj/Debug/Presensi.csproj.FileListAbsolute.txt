@@ -1,0 +1,13 @@
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\bin\Debug\Presensi.exe.config
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\bin\Debug\Presensi.exe
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\bin\Debug\Presensi.pdb
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.csproj.AssemblyReference.cache
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.Form1.resources
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.Operator.resources
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.Participant.resources
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.Properties.Resources.resources
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.csproj.GenerateResource.cache
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.csproj.CoreCompileInputs.cache
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.exe
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.pdb
+D:\UIN\Semester 5\PPDE\Presensi\Presensi\obj\Debug\Presensi.Admin.resources

@@ -29,13 +29,26 @@ namespace Presensi
         /// </summary>
         private void InitializeComponent()
         {
+            this.btn_logout = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // btn_logout
+            // 
+            this.btn_logout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_logout.Location = new System.Drawing.Point(1177, 12);
+            this.btn_logout.Name = "btn_logout";
+            this.btn_logout.Size = new System.Drawing.Size(75, 28);
+            this.btn_logout.TabIndex = 0;
+            this.btn_logout.Text = "Logout";
+            this.btn_logout.UseVisualStyleBackColor = true;
+            this.btn_logout.Click += new System.EventHandler(this.btn_logout_Click);
             // 
             // Participant
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.btn_logout);
             this.Name = "Participant";
             this.Text = "Participant";
             this.ResumeLayout(false);
@@ -43,5 +56,7 @@ namespace Presensi
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btn_logout;
     }
 }

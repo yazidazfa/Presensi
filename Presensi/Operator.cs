@@ -16,5 +16,15 @@ namespace Presensi
         {
             InitializeComponent();
         }
+
+        private void btn_logout_Click(object sender, EventArgs e)
+        {
+            // Hide the current form (which is the admin form)
+            this.Close();
+
+            // Show the login Form1 again
+            Form1 form1 = Form1.GetMainFormInstance();
+            form1.Show();
+        }
     }
 }

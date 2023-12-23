@@ -25,13 +25,17 @@ namespace Presensi
             LoadDataIntoDataGridView();
             dataGridView1.CellClick += dataGridView1_CellClick;
             UpdateUsernameLabel();
+
+            LoadDataIntoDataGridView2();
+            dataGridView2.CellClick += dataGridView2_CellClick;
+            loadDatatoCB();
         }
         private void UpdateUsernameLabel()
         {
             // Assuming you have a label named 'lblUsername' in your form
             label_username.Text = $"Welcome, {loggedInUsername}!";
         }
-
+        //manage table user
         private void LoadDataIntoDataGridView()
         {
             try
@@ -60,6 +64,7 @@ namespace Presensi
                 databaseConnector.CloseConnection();
             }
         }
+        //manage table user
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Check if the clicked cell is in a valid row (not header or empty)
@@ -80,6 +85,7 @@ namespace Presensi
                 cb_tier.SelectedItem = tier;
             }
         }
+        //manage table user
         private void AddDataToTable(string username, string password, string tier)
         {
             try
@@ -123,6 +129,7 @@ namespace Presensi
                 databaseConnector.CloseConnection();
             }
         }
+        //manage table user
         private void UpdateDataInTable(string id, string username, string password, string tier)
         {
             try
@@ -166,6 +173,7 @@ namespace Presensi
                 databaseConnector.CloseConnection();
             }
         }
+        //manage table user
         private void DeleteDataFromTable(string id)
         {
             try
@@ -181,6 +189,159 @@ namespace Presensi
                 }
 
                 MessageBox.Show("Data deleted successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+        private void LoadDataIntoDataGridView2()
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                // Replace 'your_table' with the actual table name
+                string query = "SELECT id, nama, assignedID, tanggal FROM event";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
+                {
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        // Assuming dataGridView2 is your DataGridView
+                        dataGridView2.DataSource = dataTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+        private void addDataToTableEvent(string nama, int assignedID, DateTime tanggal)
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                // Check if the event ID already exists
+                string idCheckQuery = $"SELECT COUNT(*) FROM event WHERE id = {assignedID}";
+                using (MySqlCommand idCheckCmd = new MySqlCommand(idCheckQuery, databaseConnector.Connection))
+                {
+                    int existingRecords = Convert.ToInt32(idCheckCmd.ExecuteScalar());
+                    if (existingRecords > 0)
+                    {
+                        MessageBox.Show("Event with the same ID already exists. Cannot add duplicate records.");
+                        return; // Exit the method if the ID already exists
+                    }
+                }
+
+                // Replace 'your_table' with the actual table name
+                string insertQuery = "INSERT INTO event (nama, assignedID, tanggal) VALUES (@eventName, @assignedId, @eventDate)";
+
+                using (MySqlCommand cmd = new MySqlCommand(insertQuery, databaseConnector.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@eventName", nama);
+                    cmd.Parameters.AddWithValue("@assignedId", assignedID);
+                    cmd.Parameters.AddWithValue("@eventDate", tanggal);
+
+                    cmd.ExecuteNonQuery();
+
+                    MessageBox.Show("Event data added successfully!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+        private void DeleteDataFromTableEvent(string id)
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                // Replace 'your_table' with the actual table name
+                string deleteQuery = $"DELETE FROM event WHERE id = {id}";
+
+                using (MySqlCommand cmd = new MySqlCommand(deleteQuery, databaseConnector.Connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Event deleted successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+        private void UpdateDataInTableEvent(string id, string eventName, int assignedID, DateTime eventDate)
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                // Update data in MySQL table
+                string query = $"UPDATE event SET nama = '{eventName}', assignedID = {assignedID}, tanggal = '{eventDate:yyyy-MM-dd HH:mm:ss}' WHERE id = {id}";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Event data updated successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+        private void loadDatatoCB()
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                // Replace 'your_table' with the actual table name
+                string query = "SELECT id FROM user WHERE tier = 2";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
+                {
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        // Assuming comboBoxAssignedId is your ComboBox
+                        cb_assignedID.DataSource = dataTable;
+                        cb_assignedID.DisplayMember = "id";
+                        cb_assignedID.ValueMember = "id";
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -224,7 +385,6 @@ namespace Presensi
         }
         private void Admin_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btn_update_Click(object sender, EventArgs e)
@@ -290,8 +450,124 @@ namespace Presensi
         {
             this.Close();
 
-            Form1 form1 = Form1.GetMainFormInstance();
+            Form1 form1 = Form1.GetMainFormInstance(); 
             form1.Show();
+        }
+
+        private void btn_addEvent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get values from textboxes and datetime picker
+                string eventName = tb_namaEvent.Text.Trim();
+                int assignedID = Convert.ToInt32(cb_assignedID.SelectedValue); // Use SelectedValue
+                DateTime eventDate = dtp1.Value; // Assuming dtp1 is your DateTimePicker
+
+                // Call the AddEventData function
+                addDataToTableEvent(eventName, assignedID, eventDate);
+
+                // Refresh the DataGridView2 to reflect the changes
+                LoadDataIntoDataGridView2();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            LoadDataIntoDataGridView2();
+        }
+
+        private void btn_deleteEvent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Assuming you have a DataGridView named dataGridView2
+                if (dataGridView2.SelectedCells.Count > 0)
+                {
+                    // Get the ID of the selected cell in the ID column
+                    int selectedRowIndex = dataGridView2.SelectedCells[0].RowIndex;
+                    string idToDelete = dataGridView2.Rows[selectedRowIndex].Cells["id"].Value.ToString();
+
+                    // Confirm with the user before deleting
+                    DialogResult result = MessageBox.Show("Are you sure you want to delete this event?", "Confirmation", MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        // Call the DeleteEventData function
+                        DeleteDataFromTableEvent(idToDelete);
+
+                        // Refresh the DataGridView2 to reflect the changes
+                        LoadDataIntoDataGridView2();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select an event to delete.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // Check if the clicked cell is in a valid row (not header or empty)
+                if (e.RowIndex >= 0 && e.RowIndex < dataGridView2.Rows.Count)
+                {
+                    DataGridViewRow selectedRow = dataGridView2.Rows[e.RowIndex];
+
+                    // Assuming your columns are named "id", "nama", "assignedID", and "tanggal"
+                    string id = selectedRow.Cells["id"].Value.ToString();
+                    string eventName = selectedRow.Cells["nama"].Value.ToString();
+                    string assignedID = selectedRow.Cells["assignedID"].Value.ToString();
+                    string eventDate = selectedRow.Cells["tanggal"].Value.ToString();
+
+                    // Set the values in the textboxes
+                    tb_id2.Text = id;
+                    tb_namaEvent.Text = eventName;
+                    // Assigning the assignedID directly to the TextBox (you may need to adjust this based on your data structure)
+                    cb_assignedID.Text = assignedID;
+                    // Assuming you have a DateTimePicker named dtp1 for eventDate
+                    dtp1.Value = Convert.ToDateTime(eventDate);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private void btn_clearEvent_Click(object sender, EventArgs e)
+        {
+            // Clear all textboxes and combobox
+            tb_id2.Text = string.Empty;
+            tb_namaEvent.Text = string.Empty;
+            cb_assignedID.SelectedIndex = -1; // Clear the selection in the combobox
+        }
+
+        private void btn_updateEvent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get values from textboxes and datetime picker
+                string id = tb_id2.Text.Trim();
+                string eventName = tb_namaEvent.Text.Trim();
+                int assignedID = Convert.ToInt32(cb_assignedID.SelectedValue); // Use SelectedValue
+                DateTime eventDate = dtp1.Value; // Assuming dtp1 is your DateTimePicker
+
+                // Call the UpdateDataInTableEvent function
+                UpdateDataInTableEvent(id, eventName, assignedID, eventDate);
+
+                // Refresh the DataGridView2 to reflect the changes
+                LoadDataIntoDataGridView2();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
         }
     }
 }

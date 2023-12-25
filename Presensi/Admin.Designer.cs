@@ -45,6 +45,10 @@ namespace Presensi
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn_clearEvent = new System.Windows.Forms.Button();
+            this.btn_deleteEvent = new System.Windows.Forms.Button();
+            this.btn_updateEvent = new System.Windows.Forms.Button();
+            this.btn_addEvent = new System.Windows.Forms.Button();
             this.cb_assignedID = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -54,17 +58,24 @@ namespace Presensi
             this.tb_namaEvent = new System.Windows.Forms.TextBox();
             this.tb_id2 = new System.Windows.Forms.TextBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btn_updateAtt = new System.Windows.Forms.Button();
+            this.btn_clearAtt = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cb_status = new System.Windows.Forms.ComboBox();
+            this.tb_id3 = new System.Windows.Forms.TextBox();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.btn_logout = new System.Windows.Forms.Button();
             this.label_username = new System.Windows.Forms.Label();
-            this.btn_addEvent = new System.Windows.Forms.Button();
-            this.btn_updateEvent = new System.Windows.Forms.Button();
-            this.btn_deleteEvent = new System.Windows.Forms.Button();
-            this.btn_clearEvent = new System.Windows.Forms.Button();
+            this.btn_exportAtt = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SuspendLayout();
             // 
             // tb_password
@@ -79,6 +90,7 @@ namespace Presensi
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 37);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -257,6 +269,50 @@ namespace Presensi
             this.tabPage2.Text = "Manage Event";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btn_clearEvent
+            // 
+            this.btn_clearEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_clearEvent.Location = new System.Drawing.Point(774, 438);
+            this.btn_clearEvent.Name = "btn_clearEvent";
+            this.btn_clearEvent.Size = new System.Drawing.Size(75, 28);
+            this.btn_clearEvent.TabIndex = 13;
+            this.btn_clearEvent.Text = "Clear";
+            this.btn_clearEvent.UseVisualStyleBackColor = true;
+            this.btn_clearEvent.Click += new System.EventHandler(this.btn_clearEvent_Click);
+            // 
+            // btn_deleteEvent
+            // 
+            this.btn_deleteEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_deleteEvent.Location = new System.Drawing.Point(633, 438);
+            this.btn_deleteEvent.Name = "btn_deleteEvent";
+            this.btn_deleteEvent.Size = new System.Drawing.Size(75, 28);
+            this.btn_deleteEvent.TabIndex = 12;
+            this.btn_deleteEvent.Text = "Delete";
+            this.btn_deleteEvent.UseVisualStyleBackColor = true;
+            this.btn_deleteEvent.Click += new System.EventHandler(this.btn_deleteEvent_Click);
+            // 
+            // btn_updateEvent
+            // 
+            this.btn_updateEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_updateEvent.Location = new System.Drawing.Point(483, 438);
+            this.btn_updateEvent.Name = "btn_updateEvent";
+            this.btn_updateEvent.Size = new System.Drawing.Size(75, 28);
+            this.btn_updateEvent.TabIndex = 11;
+            this.btn_updateEvent.Text = "Update";
+            this.btn_updateEvent.UseVisualStyleBackColor = true;
+            this.btn_updateEvent.Click += new System.EventHandler(this.btn_updateEvent_Click);
+            // 
+            // btn_addEvent
+            // 
+            this.btn_addEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_addEvent.Location = new System.Drawing.Point(338, 438);
+            this.btn_addEvent.Name = "btn_addEvent";
+            this.btn_addEvent.Size = new System.Drawing.Size(75, 28);
+            this.btn_addEvent.TabIndex = 10;
+            this.btn_addEvent.Text = "Add";
+            this.btn_addEvent.UseVisualStyleBackColor = true;
+            this.btn_addEvent.Click += new System.EventHandler(this.btn_addEvent_Click);
+            // 
             // cb_assignedID
             // 
             this.cb_assignedID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -341,6 +397,99 @@ namespace Presensi
             this.dataGridView2.TabIndex = 0;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.btn_exportAtt);
+            this.tabPage3.Controls.Add(this.btn_updateAtt);
+            this.tabPage3.Controls.Add(this.btn_clearAtt);
+            this.tabPage3.Controls.Add(this.label12);
+            this.tabPage3.Controls.Add(this.label9);
+            this.tabPage3.Controls.Add(this.cb_status);
+            this.tabPage3.Controls.Add(this.tb_id3);
+            this.tabPage3.Controls.Add(this.dataGridView3);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1232, 606);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Manage Attendance";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btn_updateAtt
+            // 
+            this.btn_updateAtt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_updateAtt.Location = new System.Drawing.Point(558, 361);
+            this.btn_updateAtt.Name = "btn_updateAtt";
+            this.btn_updateAtt.Size = new System.Drawing.Size(75, 28);
+            this.btn_updateAtt.TabIndex = 10;
+            this.btn_updateAtt.Text = "Update";
+            this.btn_updateAtt.UseVisualStyleBackColor = true;
+            this.btn_updateAtt.Click += new System.EventHandler(this.btn_updateAtt_Click);
+            // 
+            // btn_clearAtt
+            // 
+            this.btn_clearAtt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_clearAtt.Location = new System.Drawing.Point(394, 361);
+            this.btn_clearAtt.Name = "btn_clearAtt";
+            this.btn_clearAtt.Size = new System.Drawing.Size(75, 28);
+            this.btn_clearAtt.TabIndex = 9;
+            this.btn_clearAtt.Text = "Clear";
+            this.btn_clearAtt.UseVisualStyleBackColor = true;
+            this.btn_clearAtt.Click += new System.EventHandler(this.btn_clearAtt_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(409, 296);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(60, 20);
+            this.label12.TabIndex = 8;
+            this.label12.Text = "Status:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(409, 261);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(30, 20);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "ID:";
+            // 
+            // cb_status
+            // 
+            this.cb_status.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_status.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_status.FormattingEnabled = true;
+            this.cb_status.Items.AddRange(new object[] {
+            "Hadir",
+            "Izin",
+            "Bolos"});
+            this.cb_status.Location = new System.Drawing.Point(528, 293);
+            this.cb_status.Name = "cb_status";
+            this.cb_status.Size = new System.Drawing.Size(202, 28);
+            this.cb_status.TabIndex = 4;
+            // 
+            // tb_id3
+            // 
+            this.tb_id3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_id3.Location = new System.Drawing.Point(528, 255);
+            this.tb_id3.Name = "tb_id3";
+            this.tb_id3.ReadOnly = true;
+            this.tb_id3.Size = new System.Drawing.Size(202, 26);
+            this.tb_id3.TabIndex = 1;
+            // 
+            // dataGridView3
+            // 
+            this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.Size = new System.Drawing.Size(1226, 169);
+            this.dataGridView3.TabIndex = 0;
+            this.dataGridView3.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellClick);
+            // 
             // btn_logout
             // 
             this.btn_logout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -362,49 +511,16 @@ namespace Presensi
             this.label_username.TabIndex = 2;
             this.label_username.Text = "label5";
             // 
-            // btn_addEvent
+            // btn_exportAtt
             // 
-            this.btn_addEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_addEvent.Location = new System.Drawing.Point(338, 438);
-            this.btn_addEvent.Name = "btn_addEvent";
-            this.btn_addEvent.Size = new System.Drawing.Size(75, 28);
-            this.btn_addEvent.TabIndex = 10;
-            this.btn_addEvent.Text = "Add";
-            this.btn_addEvent.UseVisualStyleBackColor = true;
-            this.btn_addEvent.Click += new System.EventHandler(this.btn_addEvent_Click);
-            // 
-            // btn_updateEvent
-            // 
-            this.btn_updateEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_updateEvent.Location = new System.Drawing.Point(483, 438);
-            this.btn_updateEvent.Name = "btn_updateEvent";
-            this.btn_updateEvent.Size = new System.Drawing.Size(75, 28);
-            this.btn_updateEvent.TabIndex = 11;
-            this.btn_updateEvent.Text = "Update";
-            this.btn_updateEvent.UseVisualStyleBackColor = true;
-            this.btn_updateEvent.Click += new System.EventHandler(this.btn_updateEvent_Click);
-            // 
-            // btn_deleteEvent
-            // 
-            this.btn_deleteEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_deleteEvent.Location = new System.Drawing.Point(633, 438);
-            this.btn_deleteEvent.Name = "btn_deleteEvent";
-            this.btn_deleteEvent.Size = new System.Drawing.Size(75, 28);
-            this.btn_deleteEvent.TabIndex = 12;
-            this.btn_deleteEvent.Text = "Delete";
-            this.btn_deleteEvent.UseVisualStyleBackColor = true;
-            this.btn_deleteEvent.Click += new System.EventHandler(this.btn_deleteEvent_Click);
-            // 
-            // btn_clearEvent
-            // 
-            this.btn_clearEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_clearEvent.Location = new System.Drawing.Point(774, 438);
-            this.btn_clearEvent.Name = "btn_clearEvent";
-            this.btn_clearEvent.Size = new System.Drawing.Size(75, 28);
-            this.btn_clearEvent.TabIndex = 13;
-            this.btn_clearEvent.Text = "Clear";
-            this.btn_clearEvent.UseVisualStyleBackColor = true;
-            this.btn_clearEvent.Click += new System.EventHandler(this.btn_clearEvent_Click);
+            this.btn_exportAtt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_exportAtt.Location = new System.Drawing.Point(720, 361);
+            this.btn_exportAtt.Name = "btn_exportAtt";
+            this.btn_exportAtt.Size = new System.Drawing.Size(75, 28);
+            this.btn_exportAtt.TabIndex = 11;
+            this.btn_exportAtt.Text = "Export";
+            this.btn_exportAtt.UseVisualStyleBackColor = true;
+            this.btn_exportAtt.Click += new System.EventHandler(this.btn_exportAtt_Click);
             // 
             // Admin
             // 
@@ -424,6 +540,9 @@ namespace Presensi
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -462,5 +581,14 @@ namespace Presensi
         private System.Windows.Forms.Button btn_deleteEvent;
         private System.Windows.Forms.Button btn_updateEvent;
         private System.Windows.Forms.Button btn_addEvent;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.Button btn_clearAtt;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cb_status;
+        private System.Windows.Forms.TextBox tb_id3;
+        private System.Windows.Forms.Button btn_updateAtt;
+        private System.Windows.Forms.Button btn_exportAtt;
     }
 }

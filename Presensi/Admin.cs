@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
+using System.IO;
 
 namespace Presensi
 {
@@ -29,6 +30,9 @@ namespace Presensi
             LoadDataIntoDataGridView2();
             dataGridView2.CellClick += dataGridView2_CellClick;
             loadDatatoCB();
+
+            LoadDataIntoDataGridView3();
+            dataGridView3.CellClick += dataGridView3_CellClick;
         }
         private void UpdateUsernameLabel()
         {
@@ -180,6 +184,10 @@ namespace Presensi
             {
                 databaseConnector.OpenConnection();
 
+                // Retrieve the user's events before deleting the user
+                string getUserEventsQuery = $"SELECT eventID FROM kehadiran WHERE userID = {id}";
+                List<int> eventIDs = new List<int>();
+
                 // Replace 'your_table' with the actual table name
                 string deleteQuery = $"DELETE FROM user WHERE id = {id}";
 
@@ -236,7 +244,7 @@ namespace Presensi
                 databaseConnector.OpenConnection();
 
                 // Check if the event ID already exists
-                string idCheckQuery = $"SELECT COUNT(*) FROM event WHERE id = {assignedID}";
+                string idCheckQuery = $"SELECT COUNT(*) FROM event WHERE nama = '{nama}'";
                 using (MySqlCommand idCheckCmd = new MySqlCommand(idCheckQuery, databaseConnector.Connection))
                 {
                     int existingRecords = Convert.ToInt32(idCheckCmd.ExecuteScalar());
@@ -249,7 +257,7 @@ namespace Presensi
 
                 // Replace 'your_table' with the actual table name
                 string insertQuery = "INSERT INTO event (nama, assignedID, tanggal) VALUES (@eventName, @assignedId, @eventDate)";
-
+                
                 using (MySqlCommand cmd = new MySqlCommand(insertQuery, databaseConnector.Connection))
                 {
                     cmd.Parameters.AddWithValue("@eventName", nama);
@@ -260,6 +268,50 @@ namespace Presensi
 
                     MessageBox.Show("Event data added successfully!");
                 }
+                string eventQuery = "SELECT id FROM event ORDER BY id DESC LIMIT 1";
+                using (MySqlCommand cmd = new MySqlCommand(eventQuery, databaseConnector.Connection))
+                {
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        int latestEventID = Convert.ToInt32(result);
+
+                        // Automatically insert records into the 'attendance' table
+                        InsertAttendanceRecords(latestEventID);
+                    }
+                    else
+                    {
+                        MessageBox.Show("No events found in the database.");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+        private void InsertAttendanceRecords(int eventID)
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                string insertAttendanceQuery = "INSERT INTO kehadiran (userID, eventID) " +
+                                               "SELECT u.id AS userID, @eventID AS eventID " +
+                                               "FROM `user` u";
+
+                using (MySqlCommand cmd = new MySqlCommand(insertAttendanceQuery, databaseConnector.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@eventID", eventID);
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Attendance records added successfully!");
             }
             catch (Exception ex)
             {
@@ -275,6 +327,27 @@ namespace Presensi
             try
             {
                 databaseConnector.OpenConnection();
+
+                // Retrieve the event's ID before deleting the event
+                string getEventIDQuery = $"SELECT id FROM event WHERE id = {id}";
+                int eventID = 0;
+
+                using (MySqlCommand getEventIDCmd = new MySqlCommand(getEventIDQuery, databaseConnector.Connection))
+                {
+                    object result = getEventIDCmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        eventID = Convert.ToInt32(result);
+                    }
+                }
+
+                // Delete records from the 'attendance' table with the retrieved eventID
+                string deleteAttendanceQuery = $"DELETE FROM kehadiran WHERE eventID = {eventID}";
+                using (MySqlCommand deleteAttendanceCmd = new MySqlCommand(deleteAttendanceQuery, databaseConnector.Connection))
+                {
+                    deleteAttendanceCmd.ExecuteNonQuery();
+                    MessageBox.Show("Attendance deleted successfully!");
+                }
 
                 // Replace 'your_table' with the actual table name
                 string deleteQuery = $"DELETE FROM event WHERE id = {id}";
@@ -310,6 +383,7 @@ namespace Presensi
                 }
 
                 MessageBox.Show("Event data updated successfully!");
+
             }
             catch (Exception ex)
             {
@@ -350,6 +424,114 @@ namespace Presensi
             finally
             {
                 databaseConnector.CloseConnection();
+            }
+        }
+
+        private void LoadDataIntoDataGridView3()
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                // Replace 'your_table' with the actual table name
+                string query = "SELECT id, eventID, userID, status FROM kehadiran";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
+                {
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        // Assuming dataGridView2 is your DataGridView
+                        dataGridView3.DataSource = dataTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+
+        private void UpdateDataInTableAtt(string userID, string status)
+        {
+            try
+            {
+                // Update kehadiran table based on the selected status
+                databaseConnector.OpenConnection();
+
+                string updateKehadiranQuery = $"UPDATE kehadiran SET status = '{status}' WHERE userID = {userID}";
+
+                using (MySqlCommand cmd = new MySqlCommand(updateKehadiranQuery, databaseConnector.Connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Kehadiran status updated successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating kehadiran status: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+        private void ExportToCSV(DataGridView dataGridView)
+        {
+            try
+            {
+                // Create a SaveFileDialog to let the user choose the file path
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "CSV files (*.csv)|*.csv",
+                    Title = "Save CSV File",
+                    FileName = "DataExport.csv"
+                };
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Use the selected file path
+                    string filePath = saveFileDialog.FileName;
+
+                    // Create a StreamWriter to write the CSV file
+                    using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
+                    {
+                        // Write the header row
+                        for (int i = 0; i < dataGridView.ColumnCount; i++)
+                        {
+                            sw.Write(dataGridView.Columns[i].HeaderText);
+                            if (i < dataGridView.ColumnCount - 1)
+                                sw.Write(",");
+                        }
+                        sw.WriteLine();
+
+                        // Write the data rows
+                        for (int i = 0; i < dataGridView.Rows.Count; i++)
+                        {
+                            for (int j = 0; j < dataGridView.Columns.Count; j++)
+                            {
+                                if (dataGridView.Rows[i].Cells[j].Value != null)
+                                    sw.Write(dataGridView.Rows[i].Cells[j].Value.ToString());
+                                if (j < dataGridView.Columns.Count - 1)
+                                    sw.Write(",");
+                            }
+                            sw.WriteLine();
+                        }
+                    }
+
+                    MessageBox.Show("Data exported successfully!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
         private string UnhashPassword(string hashedPassword, string salt)
@@ -468,6 +650,7 @@ namespace Presensi
 
                 // Refresh the DataGridView2 to reflect the changes
                 LoadDataIntoDataGridView2();
+                LoadDataIntoDataGridView3();
             }
             catch (Exception ex)
             {
@@ -497,6 +680,7 @@ namespace Presensi
 
                         // Refresh the DataGridView2 to reflect the changes
                         LoadDataIntoDataGridView2();
+                        LoadDataIntoDataGridView3();
                     }
                 }
                 else
@@ -568,6 +752,59 @@ namespace Presensi
             {
                 MessageBox.Show($"Error: {ex.Message}");
             }
+        }
+
+        private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0 && e.RowIndex < dataGridView3.Rows.Count)
+                {
+                    DataGridViewRow selectedRow = dataGridView3.Rows[e.RowIndex];
+
+                    string userID = selectedRow.Cells["userID"].Value.ToString();
+                    string status = selectedRow.Cells["status"].Value.ToString();
+
+                    tb_id3.Text = userID;
+                    cb_status.Text = status;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private void btn_clearAtt_Click(object sender, EventArgs e)
+        {
+            tb_id3.Text = string.Empty;
+            cb_status.SelectedIndex = -1 ;
+        }
+
+        private void btn_updateAtt_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get values from textboxes and combobox
+                string userID = tb_id3.Text.Trim();
+                string status = cb_status.SelectedItem?.ToString();
+
+                // Call the UpdateKehadiranStatus function
+                UpdateDataInTableAtt(userID, status);
+
+                // Refresh the DataGridView3 to reflect the changes
+                LoadDataIntoDataGridView3();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private void btn_exportAtt_Click(object sender, EventArgs e)
+        {
+            ExportToCSV(dataGridView3);
         }
     }
 }

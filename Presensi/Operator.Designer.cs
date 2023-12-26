@@ -33,6 +33,8 @@ namespace Presensi
             this.label_username = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btn_clear1 = new System.Windows.Forms.Button();
+            this.btn_update1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,11 +43,18 @@ namespace Presensi
             this.tb_id = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btn_update1 = new System.Windows.Forms.Button();
-            this.btn_clear1 = new System.Windows.Forms.Button();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.tb_id2 = new System.Windows.Forms.TextBox();
+            this.cb_status = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btn_update2 = new System.Windows.Forms.Button();
+            this.btn_clear2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_logout
@@ -97,6 +106,28 @@ namespace Presensi
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Manage Event";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btn_clear1
+            // 
+            this.btn_clear1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_clear1.Location = new System.Drawing.Point(679, 398);
+            this.btn_clear1.Name = "btn_clear1";
+            this.btn_clear1.Size = new System.Drawing.Size(75, 28);
+            this.btn_clear1.TabIndex = 7;
+            this.btn_clear1.Text = "Clear";
+            this.btn_clear1.UseVisualStyleBackColor = true;
+            this.btn_clear1.Click += new System.EventHandler(this.btn_clear1_Click);
+            // 
+            // btn_update1
+            // 
+            this.btn_update1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_update1.Location = new System.Drawing.Point(497, 398);
+            this.btn_update1.Name = "btn_update1";
+            this.btn_update1.Size = new System.Drawing.Size(75, 28);
+            this.btn_update1.TabIndex = 6;
+            this.btn_update1.Text = "Update";
+            this.btn_update1.UseVisualStyleBackColor = true;
+            this.btn_update1.Click += new System.EventHandler(this.btn_update1_Click);
             // 
             // label3
             // 
@@ -164,6 +195,13 @@ namespace Presensi
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btn_clear2);
+            this.tabPage2.Controls.Add(this.btn_update2);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.cb_status);
+            this.tabPage2.Controls.Add(this.tb_id2);
+            this.tabPage2.Controls.Add(this.dataGridView2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -172,27 +210,78 @@ namespace Presensi
             this.tabPage2.Text = "Manage Attendance";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btn_update1
+            // dataGridView2
             // 
-            this.btn_update1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_update1.Location = new System.Drawing.Point(497, 398);
-            this.btn_update1.Name = "btn_update1";
-            this.btn_update1.Size = new System.Drawing.Size(75, 28);
-            this.btn_update1.TabIndex = 6;
-            this.btn_update1.Text = "Update";
-            this.btn_update1.UseVisualStyleBackColor = true;
-            this.btn_update1.Click += new System.EventHandler(this.btn_update1_Click);
+            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(1226, 169);
+            this.dataGridView2.TabIndex = 0;
+            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             // 
-            // btn_clear1
+            // tb_id2
             // 
-            this.btn_clear1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_clear1.Location = new System.Drawing.Point(679, 398);
-            this.btn_clear1.Name = "btn_clear1";
-            this.btn_clear1.Size = new System.Drawing.Size(75, 28);
-            this.btn_clear1.TabIndex = 7;
-            this.btn_clear1.Text = "Clear";
-            this.btn_clear1.UseVisualStyleBackColor = true;
-            this.btn_clear1.Click += new System.EventHandler(this.btn_clear1_Click);
+            this.tb_id2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_id2.Location = new System.Drawing.Point(571, 255);
+            this.tb_id2.Name = "tb_id2";
+            this.tb_id2.ReadOnly = true;
+            this.tb_id2.Size = new System.Drawing.Size(202, 26);
+            this.tb_id2.TabIndex = 1;
+            // 
+            // cb_status
+            // 
+            this.cb_status.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_status.FormattingEnabled = true;
+            this.cb_status.Items.AddRange(new object[] {
+            "Hadir",
+            "Izin",
+            "Bolos"});
+            this.cb_status.Location = new System.Drawing.Point(571, 293);
+            this.cb_status.Name = "cb_status";
+            this.cb_status.Size = new System.Drawing.Size(202, 28);
+            this.cb_status.TabIndex = 2;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(437, 258);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(30, 20);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "ID:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(437, 296);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 20);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Status:";
+            // 
+            // btn_update2
+            // 
+            this.btn_update2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_update2.Location = new System.Drawing.Point(502, 363);
+            this.btn_update2.Name = "btn_update2";
+            this.btn_update2.Size = new System.Drawing.Size(75, 28);
+            this.btn_update2.TabIndex = 5;
+            this.btn_update2.Text = "Update";
+            this.btn_update2.UseVisualStyleBackColor = true;
+            this.btn_update2.Click += new System.EventHandler(this.btn_update2_Click);
+            // 
+            // btn_clear2
+            // 
+            this.btn_clear2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_clear2.Location = new System.Drawing.Point(660, 363);
+            this.btn_clear2.Name = "btn_clear2";
+            this.btn_clear2.Size = new System.Drawing.Size(75, 28);
+            this.btn_clear2.TabIndex = 6;
+            this.btn_clear2.Text = "Clear";
+            this.btn_clear2.UseVisualStyleBackColor = true;
             // 
             // Operator
             // 
@@ -208,6 +297,9 @@ namespace Presensi
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,5 +321,12 @@ namespace Presensi
         private System.Windows.Forms.TextBox tb_nama;
         private System.Windows.Forms.Button btn_clear1;
         private System.Windows.Forms.Button btn_update1;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.ComboBox cb_status;
+        private System.Windows.Forms.TextBox tb_id2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn_clear2;
+        private System.Windows.Forms.Button btn_update2;
     }
 }

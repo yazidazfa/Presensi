@@ -26,6 +26,7 @@ namespace Presensi
             UpdateUsernameLabel();
 
             LoadDataToDataGridView1();
+            LoadDataToDataGridView2();
         }
         private void UpdateUsernameLabel()
         {
@@ -49,7 +50,7 @@ namespace Presensi
                 databaseConnector.OpenConnection();
 
                 // Replace 'event' with your actual table name and column names
-                string query = "SELECT id AS event_id, nama, tanggal FROM event WHERE assignedID = @userId";
+                string query = "SELECT id AS eventID, nama, tanggal FROM event WHERE assignedID = @userId";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
                 {
@@ -84,7 +85,7 @@ namespace Presensi
                 DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
 
                 // Assuming your columns are named "id", "username", "password", and "tier"
-                string id = selectedRow.Cells["event_id"].Value.ToString();
+                string id = selectedRow.Cells["eventID"].Value.ToString();
                 string nama = selectedRow.Cells["nama"].Value.ToString();
 
                 // Set the values in the textboxes and combobox
@@ -132,6 +133,105 @@ namespace Presensi
             }
         }
 
+        private void LoadDataToDataGridView2()
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                // Get the assigned event ID for the current tier 2 user
+                int assignedEventID = GetAssignedEventIDForUser(userID);
+
+                if (assignedEventID == -1)
+                {
+                    MessageBox.Show("Error: Assigned event ID not found for the current user.");
+                    return;
+                }
+
+                // Replace 'kehadiran' with your actual attendance table name
+                string query = $"SELECT id AS AttendanceID, eventID, userID, status FROM kehadiran WHERE eventID IN (SELECT id FROM event WHERE assignedID = {assignedEventID})";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
+                {
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        // Assuming dataGridView3 is your DataGridView
+                        dataGridView2.DataSource = dataTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+        
+
+        private int GetAssignedEventIDForUser(int userID)
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                // Replace 'event' and 'assignedID' with your actual table and column names
+                string query = $"SELECT assignedID FROM event WHERE assignedID = {userID}";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
+                {
+                    object result = cmd.ExecuteScalar();
+
+                    // If the assigned event ID is found, return it
+                    if (result != null && int.TryParse(result.ToString(), out int assignedEventID))
+                    {
+                        return assignedEventID;
+                    }
+
+                    return -1; // Return -1 if assigned event ID is not found
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+                return -1;
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+        private void UpdateDataToTableAtt(int attendanceId, string status)
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                // Update data in MySQL table
+                string query = $"UPDATE kehadiran SET status = '{status}' WHERE id = {attendanceId}";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Attendance data updated successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+        }
+
         private void btn_clear1_Click(object sender, EventArgs e)
         {
             tb_id.Text = string.Empty;
@@ -156,6 +256,51 @@ namespace Presensi
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private void btn_update2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get values from textboxes and combobox
+                string idString = tb_id2.Text.Trim();
+                string status = cb_status.SelectedItem?.ToString();
+
+                // Convert the idString to an integer
+                if (int.TryParse(idString, out int id))
+                {
+                    // Call the UpdateDataInTableAtt function
+                    UpdateDataToTableAtt(id, status);
+
+                    // Refresh the DataGridView3 to reflect the changes
+                    LoadDataToDataGridView2();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid ID. Please enter a valid integer.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Check if the clicked cell is in a valid row (not header or empty)
+            if (e.RowIndex >= 0 && e.RowIndex < dataGridView2.Rows.Count)
+            {
+                DataGridViewRow selectedRow = dataGridView2.Rows[e.RowIndex];
+
+                // Assuming your columns are named "id", "username", "password", and "tier"
+                string id = selectedRow.Cells["AttendanceID"].Value.ToString();
+                string status = selectedRow.Cells["status"].Value.ToString();
+
+                // Set the values in the textboxes and combobox
+                tb_id2.Text = id;
+                cb_status.Text = status;
             }
         }
     }

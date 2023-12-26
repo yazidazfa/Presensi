@@ -126,6 +126,38 @@ namespace Presensi
 
             return 0; // Return 0 if validation fails
         }
+        private int GetUserId(string username)
+        {
+            try
+            {
+                databaseConnector.OpenConnection();
+
+                string query = "SELECT id FROM user WHERE name = @username";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@username", username);
+
+                    object result = cmd.ExecuteScalar();
+
+                    if (result != null && result != DBNull.Value)
+                    {
+                        return Convert.ToInt32(result);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                databaseConnector.CloseConnection();
+            }
+
+            return 0; // Return 0 if user ID retrieval fails
+        }
         private void OpenAppropriateForm(int userTier)
         {
 
@@ -137,12 +169,12 @@ namespace Presensi
                     adminForm.Show();
                     break;
                 case 2:
-                    Operator operatorForm = new Operator();
+                    Operator operatorForm = new Operator(databaseConnector,LoggedInUsername, GetUserId(LoggedInUsername));
                     operatorForm.FormClosing += (sender, e) => ShowForm1OnClose(operatorForm);
                     operatorForm.Show();
                     break;
                 case 3:
-                    Participant participantForm = new Participant();
+                    Participant participantForm = new Participant(databaseConnector, LoggedInUsername);
                     participantForm.FormClosing += (sender, e) => ShowForm1OnClose(participantForm);
                     participantForm.Show();
                     break;

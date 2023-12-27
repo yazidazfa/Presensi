@@ -59,6 +59,7 @@ namespace Presensi
             this.tb_id2 = new System.Windows.Forms.TextBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lbl_idatt = new System.Windows.Forms.Label();
             this.btn_exportAtt = new System.Windows.Forms.Button();
             this.btn_updateAtt = new System.Windows.Forms.Button();
             this.btn_clearAtt = new System.Windows.Forms.Button();
@@ -399,6 +400,7 @@ namespace Presensi
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.lbl_idatt);
             this.tabPage3.Controls.Add(this.btn_exportAtt);
             this.tabPage3.Controls.Add(this.btn_updateAtt);
             this.tabPage3.Controls.Add(this.btn_clearAtt);
@@ -414,6 +416,16 @@ namespace Presensi
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Manage Attendance";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // lbl_idatt
+            // 
+            this.lbl_idatt.AutoSize = true;
+            this.lbl_idatt.Location = new System.Drawing.Point(176, 255);
+            this.lbl_idatt.Name = "lbl_idatt";
+            this.lbl_idatt.Size = new System.Drawing.Size(41, 13);
+            this.lbl_idatt.TabIndex = 12;
+            this.lbl_idatt.Text = "label10";
+            this.lbl_idatt.Visible = false;
             // 
             // btn_exportAtt
             // 
@@ -464,9 +476,9 @@ namespace Presensi
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(409, 258);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(30, 20);
+            this.label9.Size = new System.Drawing.Size(61, 20);
             this.label9.TabIndex = 5;
-            this.label9.Text = "ID:";
+            this.label9.Text = "userID:";
             // 
             // cb_status
             // 
@@ -590,5 +602,6 @@ namespace Presensi
         private System.Windows.Forms.TextBox tb_id3;
         private System.Windows.Forms.Button btn_updateAtt;
         private System.Windows.Forms.Button btn_exportAtt;
+        private System.Windows.Forms.Label lbl_idatt;
     }
 }

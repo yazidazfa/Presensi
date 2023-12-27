@@ -125,7 +125,7 @@ namespace Presensi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"Error: Please select a row!");
             }
             finally
             {
@@ -224,7 +224,7 @@ namespace Presensi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"Error: Please select a row!");
             }
             finally
             {
@@ -252,10 +252,12 @@ namespace Presensi
 
                 // Refresh the DataGridView2 to reflect the changes
                 LoadDataToDataGridView1();
+                tb_id.Text = string.Empty;
+                tb_nama.Text = string.Empty;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"Error: Please select a row!");
             }
         }
 
@@ -278,12 +280,14 @@ namespace Presensi
                 }
                 else
                 {
-                    MessageBox.Show("Invalid ID. Please enter a valid integer.");
+                    MessageBox.Show("Error: Please select a row!");
                 }
+                tb_id2.Text = string.Empty;
+                cb_status.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"Error: Please select a row!");
             }
         }
 

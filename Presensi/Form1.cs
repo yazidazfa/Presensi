@@ -174,7 +174,7 @@ namespace Presensi
                     operatorForm.Show();
                     break;
                 case 3:
-                    Participant participantForm = new Participant(databaseConnector, LoggedInUsername);
+                    Participant participantForm = new Participant(databaseConnector, LoggedInUsername, GetUserId(LoggedInUsername));
                     participantForm.FormClosing += (sender, e) => ShowForm1OnClose(participantForm);
                     participantForm.Show();
                     break;

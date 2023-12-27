@@ -170,7 +170,7 @@ namespace Presensi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"Error: Please select a row!");
             }
             finally
             {
@@ -387,7 +387,7 @@ namespace Presensi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"Error: Please select a row!");
             }
             finally
             {
@@ -434,7 +434,7 @@ namespace Presensi
                 databaseConnector.OpenConnection();
 
                 // Replace 'your_table' with the actual table name
-                string query = "SELECT id, eventID, userID, status FROM kehadiran";
+                string query = "SELECT id AS AttendanceID, eventID, userID, status FROM kehadiran";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
                 {
@@ -458,14 +458,14 @@ namespace Presensi
             }
         }
 
-        private void UpdateDataInTableAtt(string userID, string status)
+        private void UpdateDataInTableAtt(string id, string userID, string status)
         {
             try
             {
                 // Update kehadiran table based on the selected status
                 databaseConnector.OpenConnection();
 
-                string updateKehadiranQuery = $"UPDATE kehadiran SET status = '{status}' WHERE userID = {userID}";
+                string updateKehadiranQuery = $"UPDATE kehadiran SET status = '{status}' WHERE userID= {userID} AND id = {id}";
 
                 using (MySqlCommand cmd = new MySqlCommand(updateKehadiranQuery, databaseConnector.Connection))
                 {
@@ -476,7 +476,7 @@ namespace Presensi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error updating kehadiran status: {ex.Message}");
+                MessageBox.Show($"Error: Please select a row!");
             }
             finally
             {
@@ -584,6 +584,11 @@ namespace Presensi
 
             // Refresh the DataGridView to reflect the changes
             LoadDataIntoDataGridView();
+
+            tb_id.Text = string.Empty;
+            tb_username.Text = string.Empty;
+            tb_password.Text = string.Empty;
+            cb_tier.SelectedIndex = -1;
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
@@ -598,11 +603,22 @@ namespace Presensi
         {
             string username = tb_username.Text.Trim();
             string password = tb_password.Text.Trim();
-            string tier = cb_tier.SelectedItem?.ToString(); 
+            string tier = cb_tier.SelectedItem?.ToString();
+
+            // Check for empty input fields
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(tier))
+            {
+                MessageBox.Show("Please fill in all the fields.");
+                return; // Exit the method if any field is empty
+            }
 
             AddDataToTable(username, password, tier);
 
             LoadDataIntoDataGridView();
+            tb_username.Text = string.Empty;
+            tb_password.Text = string.Empty;
+            cb_tier.SelectedIndex = -1;
+
         }
 
         private void btn_delete_Click(object sender, EventArgs e)
@@ -625,6 +641,10 @@ namespace Presensi
 
                 // Refresh the DataGridView to reflect the changes
                 LoadDataIntoDataGridView();
+                tb_id.Text = string.Empty;
+                tb_username.Text = string.Empty;
+                tb_password.Text = string.Empty;
+                cb_tier.SelectedIndex = -1;
             }
         }
 
@@ -645,18 +665,29 @@ namespace Presensi
                 int assignedID = Convert.ToInt32(cb_assignedID.SelectedValue); // Use SelectedValue
                 DateTime eventDate = dtp1.Value; // Assuming dtp1 is your DateTimePicker
 
+                // Check for empty input fields
+                if (string.IsNullOrEmpty(eventName) || assignedID == null)
+                {
+                    MessageBox.Show("Please fill in all the fields.");
+                    return; // Exit the method if any field is empty
+                }
                 // Call the AddEventData function
                 addDataToTableEvent(eventName, assignedID, eventDate);
 
                 // Refresh the DataGridView2 to reflect the changes
                 LoadDataIntoDataGridView2();
                 LoadDataIntoDataGridView3();
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}");
             }
             LoadDataIntoDataGridView2();
+
+            tb_id2.Text = string.Empty;
+            tb_namaEvent.Text = string.Empty;
+            cb_assignedID.SelectedIndex = -1;
         }
 
         private void btn_deleteEvent_Click(object sender, EventArgs e)
@@ -681,6 +712,10 @@ namespace Presensi
                         // Refresh the DataGridView2 to reflect the changes
                         LoadDataIntoDataGridView2();
                         LoadDataIntoDataGridView3();
+
+                        tb_id2.Text = string.Empty;
+                        tb_namaEvent.Text = string.Empty;
+                        cb_assignedID.SelectedIndex = -1;
                     }
                 }
                 else
@@ -747,6 +782,10 @@ namespace Presensi
 
                 // Refresh the DataGridView2 to reflect the changes
                 LoadDataIntoDataGridView2();
+
+                tb_id2.Text = string.Empty;
+                tb_namaEvent.Text = string.Empty;
+                cb_assignedID.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -762,9 +801,11 @@ namespace Presensi
                 {
                     DataGridViewRow selectedRow = dataGridView3.Rows[e.RowIndex];
 
+                    string id = selectedRow.Cells["AttendanceID"].Value.ToString();
                     string userID = selectedRow.Cells["userID"].Value.ToString();
                     string status = selectedRow.Cells["status"].Value.ToString();
 
+                    lbl_idatt.Text = id;
                     tb_id3.Text = userID;
                     cb_status.Text = status;
 
@@ -787,11 +828,12 @@ namespace Presensi
             try
             {
                 // Get values from textboxes and combobox
+                string id = lbl_idatt.Text.Trim();
                 string userID = tb_id3.Text.Trim();
                 string status = cb_status.SelectedItem?.ToString();
 
                 // Call the UpdateKehadiranStatus function
-                UpdateDataInTableAtt(userID, status);
+                UpdateDataInTableAtt(id,userID, status);
 
                 // Refresh the DataGridView3 to reflect the changes
                 LoadDataIntoDataGridView3();
@@ -800,6 +842,9 @@ namespace Presensi
             {
                 MessageBox.Show($"Error: {ex.Message}");
             }
+
+            tb_id3.Text = string.Empty;
+            cb_status.SelectedIndex = -1;
         }
 
         private void btn_exportAtt_Click(object sender, EventArgs e)

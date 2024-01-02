@@ -70,6 +70,8 @@ namespace Presensi
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.btn_logout = new System.Windows.Forms.Button();
             this.label_username = new System.Windows.Forms.Label();
+            this.tb_tempat = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -216,6 +218,7 @@ namespace Presensi
             // 
             // cb_tier
             // 
+            this.cb_tier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_tier.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_tier.FormattingEnabled = true;
             this.cb_tier.Items.AddRange(new object[] {
@@ -249,6 +252,7 @@ namespace Presensi
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label10);
             this.tabPage2.Controls.Add(this.btn_clearEvent);
             this.tabPage2.Controls.Add(this.btn_deleteEvent);
             this.tabPage2.Controls.Add(this.btn_updateEvent);
@@ -259,6 +263,7 @@ namespace Presensi
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.dtp1);
+            this.tabPage2.Controls.Add(this.tb_tempat);
             this.tabPage2.Controls.Add(this.tb_namaEvent);
             this.tabPage2.Controls.Add(this.tb_id2);
             this.tabPage2.Controls.Add(this.dataGridView2);
@@ -273,7 +278,7 @@ namespace Presensi
             // btn_clearEvent
             // 
             this.btn_clearEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_clearEvent.Location = new System.Drawing.Point(774, 438);
+            this.btn_clearEvent.Location = new System.Drawing.Point(777, 482);
             this.btn_clearEvent.Name = "btn_clearEvent";
             this.btn_clearEvent.Size = new System.Drawing.Size(75, 28);
             this.btn_clearEvent.TabIndex = 13;
@@ -284,7 +289,7 @@ namespace Presensi
             // btn_deleteEvent
             // 
             this.btn_deleteEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_deleteEvent.Location = new System.Drawing.Point(633, 438);
+            this.btn_deleteEvent.Location = new System.Drawing.Point(636, 482);
             this.btn_deleteEvent.Name = "btn_deleteEvent";
             this.btn_deleteEvent.Size = new System.Drawing.Size(75, 28);
             this.btn_deleteEvent.TabIndex = 12;
@@ -295,7 +300,7 @@ namespace Presensi
             // btn_updateEvent
             // 
             this.btn_updateEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_updateEvent.Location = new System.Drawing.Point(483, 438);
+            this.btn_updateEvent.Location = new System.Drawing.Point(483, 482);
             this.btn_updateEvent.Name = "btn_updateEvent";
             this.btn_updateEvent.Size = new System.Drawing.Size(75, 28);
             this.btn_updateEvent.TabIndex = 11;
@@ -306,7 +311,7 @@ namespace Presensi
             // btn_addEvent
             // 
             this.btn_addEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_addEvent.Location = new System.Drawing.Point(338, 438);
+            this.btn_addEvent.Location = new System.Drawing.Point(338, 482);
             this.btn_addEvent.Name = "btn_addEvent";
             this.btn_addEvent.Size = new System.Drawing.Size(75, 28);
             this.btn_addEvent.TabIndex = 10;
@@ -328,7 +333,7 @@ namespace Presensi
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(409, 369);
+            this.label8.Location = new System.Drawing.Point(409, 411);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(70, 20);
             this.label8.TabIndex = 8;
@@ -366,7 +371,7 @@ namespace Presensi
             // 
             // dtp1
             // 
-            this.dtp1.Location = new System.Drawing.Point(528, 368);
+            this.dtp1.Location = new System.Drawing.Point(528, 411);
             this.dtp1.Name = "dtp1";
             this.dtp1.Size = new System.Drawing.Size(202, 20);
             this.dtp1.TabIndex = 4;
@@ -534,6 +539,24 @@ namespace Presensi
             this.label_username.TabIndex = 2;
             this.label_username.Text = "label5";
             // 
+            // tb_tempat
+            // 
+            this.tb_tempat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_tempat.Location = new System.Drawing.Point(528, 371);
+            this.tb_tempat.Name = "tb_tempat";
+            this.tb_tempat.Size = new System.Drawing.Size(202, 26);
+            this.tb_tempat.TabIndex = 2;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(409, 374);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(67, 20);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "Tempat:";
+            // 
             // Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -603,5 +626,7 @@ namespace Presensi
         private System.Windows.Forms.Button btn_updateAtt;
         private System.Windows.Forms.Button btn_exportAtt;
         private System.Windows.Forms.Label lbl_idatt;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tb_tempat;
     }
 }

@@ -214,7 +214,7 @@ namespace Presensi
                 databaseConnector.OpenConnection();
 
                 // Replace 'your_table' with the actual table name
-                string query = "SELECT id, nama, assignedID, tanggal FROM event";
+                string query = "SELECT id, nama, tempat, tanggal, assignedID FROM event";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
                 {
@@ -237,7 +237,7 @@ namespace Presensi
                 databaseConnector.CloseConnection();
             }
         }
-        private void addDataToTableEvent(string nama, int assignedID, DateTime tanggal)
+        private void addDataToTableEvent(string nama, int assignedID, DateTime tanggal, string tempat)
         {
             try
             {
@@ -256,13 +256,14 @@ namespace Presensi
                 }
 
                 // Replace 'your_table' with the actual table name
-                string insertQuery = "INSERT INTO event (nama, assignedID, tanggal) VALUES (@eventName, @assignedId, @eventDate)";
+                string insertQuery = "INSERT INTO event (nama, assignedID, tanggal, tempat) VALUES (@eventName, @assignedId, @eventDate, @tempat)";
                 
                 using (MySqlCommand cmd = new MySqlCommand(insertQuery, databaseConnector.Connection))
                 {
                     cmd.Parameters.AddWithValue("@eventName", nama);
                     cmd.Parameters.AddWithValue("@assignedId", assignedID);
                     cmd.Parameters.AddWithValue("@eventDate", tanggal);
+                    cmd.Parameters.AddWithValue("@tempat", tempat);
 
                     cmd.ExecuteNonQuery();
 
@@ -368,14 +369,14 @@ namespace Presensi
                 databaseConnector.CloseConnection();
             }
         }
-        private void UpdateDataInTableEvent(string id, string eventName, int assignedID, DateTime eventDate)
+        private void UpdateDataInTableEvent(string id, string eventName, int assignedID, DateTime eventDate, string tempat)
         {
             try
             {
                 databaseConnector.OpenConnection();
 
                 // Update data in MySQL table
-                string query = $"UPDATE event SET nama = '{eventName}', assignedID = {assignedID}, tanggal = '{eventDate:yyyy-MM-dd HH:mm:ss}' WHERE id = {id}";
+                string query = $"UPDATE event SET nama = '{eventName}', assignedID = {assignedID}, tanggal = '{eventDate:yyyy-MM-dd HH:mm:ss}', tempat = '{tempat}' WHERE id = {id}";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
                 {
@@ -664,6 +665,7 @@ namespace Presensi
                 string eventName = tb_namaEvent.Text.Trim();
                 int assignedID = Convert.ToInt32(cb_assignedID.SelectedValue); // Use SelectedValue
                 DateTime eventDate = dtp1.Value; // Assuming dtp1 is your DateTimePicker
+                string tempat = tb_tempat.Text.Trim();
 
                 // Check for empty input fields
                 if (string.IsNullOrEmpty(eventName) || assignedID == null)
@@ -672,7 +674,7 @@ namespace Presensi
                     return; // Exit the method if any field is empty
                 }
                 // Call the AddEventData function
-                addDataToTableEvent(eventName, assignedID, eventDate);
+                addDataToTableEvent(eventName, assignedID, eventDate, tempat);
 
                 // Refresh the DataGridView2 to reflect the changes
                 LoadDataIntoDataGridView2();
@@ -688,6 +690,7 @@ namespace Presensi
             tb_id2.Text = string.Empty;
             tb_namaEvent.Text = string.Empty;
             cb_assignedID.SelectedIndex = -1;
+            tb_tempat.Text = string.Empty;
         }
 
         private void btn_deleteEvent_Click(object sender, EventArgs e)
@@ -716,6 +719,7 @@ namespace Presensi
                         tb_id2.Text = string.Empty;
                         tb_namaEvent.Text = string.Empty;
                         cb_assignedID.SelectedIndex = -1;
+                        tb_tempat.Text = string.Empty;
                     }
                 }
                 else
@@ -743,6 +747,7 @@ namespace Presensi
                     string eventName = selectedRow.Cells["nama"].Value.ToString();
                     string assignedID = selectedRow.Cells["assignedID"].Value.ToString();
                     string eventDate = selectedRow.Cells["tanggal"].Value.ToString();
+                    string tempat = selectedRow.Cells["tempat"].Value.ToString();
 
                     // Set the values in the textboxes
                     tb_id2.Text = id;
@@ -751,6 +756,7 @@ namespace Presensi
                     cb_assignedID.Text = assignedID;
                     // Assuming you have a DateTimePicker named dtp1 for eventDate
                     dtp1.Value = Convert.ToDateTime(eventDate);
+                    tb_tempat.Text = tempat;
                 }
             }
             catch (Exception ex)
@@ -776,9 +782,10 @@ namespace Presensi
                 string eventName = tb_namaEvent.Text.Trim();
                 int assignedID = Convert.ToInt32(cb_assignedID.SelectedValue); // Use SelectedValue
                 DateTime eventDate = dtp1.Value; // Assuming dtp1 is your DateTimePicker
+                string tempat = tb_tempat.Text.Trim();
 
                 // Call the UpdateDataInTableEvent function
-                UpdateDataInTableEvent(id, eventName, assignedID, eventDate);
+                UpdateDataInTableEvent(id, eventName, assignedID, eventDate,tempat);
 
                 // Refresh the DataGridView2 to reflect the changes
                 LoadDataIntoDataGridView2();
@@ -786,6 +793,7 @@ namespace Presensi
                 tb_id2.Text = string.Empty;
                 tb_namaEvent.Text = string.Empty;
                 cb_assignedID.SelectedIndex = -1;
+                tb_tempat.Text = string.Empty;
             }
             catch (Exception ex)
             {

@@ -51,7 +51,10 @@ namespace Presensi
                 }
 
                 // Replace 'kehadiran' with your actual attendance table name
-                string query = $"SELECT id AS AttendanceID, eventID, userID, status FROM kehadiran WHERE userID IN (SELECT id FROM user WHERE id = {UID})";
+                string query = $"SELECT k.id AS AttendanceID, k.eventID, e.nama, e.tempat, k.userID, k.status " +
+               $"FROM kehadiran k " +
+               $"INNER JOIN event e ON k.eventID = e.id " +
+               $"WHERE k.userID IN (SELECT id FROM user WHERE id = {UID})";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
                 {

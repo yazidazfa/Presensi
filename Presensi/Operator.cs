@@ -50,7 +50,7 @@ namespace Presensi
                 databaseConnector.OpenConnection();
 
                 // Replace 'event' with your actual table name and column names
-                string query = "SELECT id AS eventID, nama, tanggal FROM event WHERE assignedID = @userId";
+                string query = "SELECT id AS eventID, nama, tempat, tanggal FROM event WHERE assignedID = @userId";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
                 {
@@ -87,10 +87,12 @@ namespace Presensi
                 // Assuming your columns are named "id", "username", "password", and "tier"
                 string id = selectedRow.Cells["eventID"].Value.ToString();
                 string nama = selectedRow.Cells["nama"].Value.ToString();
+                string tempat = selectedRow.Cells["tempat"].Value.ToString();
 
                 // Set the values in the textboxes and combobox
                 tb_id.Text = id;
                 tb_nama.Text = nama;
+                tb_tempat.Text = tempat;
 
                 // Extract the date value and set it in the DateTimePicker
                 if (DateTime.TryParse(selectedRow.Cells["tanggal"].Value.ToString(), out DateTime eventDate))
@@ -106,14 +108,14 @@ namespace Presensi
             }
         }
 
-        private void UpdateDataInTableEvent(string id, string eventName, DateTime eventDate)
+        private void UpdateDataInTableEvent(string id, string eventName, DateTime eventDate, string tempat)
         {
             try
             {
                 databaseConnector.OpenConnection();
 
                 // Update data in MySQL table
-                string query = $"UPDATE event SET nama = '{eventName}', tanggal = '{eventDate:yyyy-MM-dd HH:mm:ss}' WHERE id = {id}";
+                string query = $"UPDATE event SET nama = '{eventName}', tanggal = '{eventDate:yyyy-MM-dd HH:mm:ss}', tempat = '{tempat}' WHERE id = {id}";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
                 {
@@ -149,7 +151,10 @@ namespace Presensi
                 }
 
                 // Replace 'kehadiran' with your actual attendance table name
-                string query = $"SELECT id AS AttendanceID, eventID, userID, status FROM kehadiran WHERE eventID IN (SELECT id FROM event WHERE assignedID = {assignedEventID})";
+                string query = $"SELECT k.id AS AttendanceID, k.eventID, e.nama AS NamaEvent, e.tempat, k.userID, k.status " +
+               $"FROM kehadiran k " +
+               $"INNER JOIN event e ON k.eventID = e.id " +
+               $"WHERE k.eventID IN (SELECT id FROM event WHERE assignedID = {assignedEventID})";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
                 {
@@ -246,14 +251,16 @@ namespace Presensi
                 string id = tb_id.Text.Trim();
                 string eventName = tb_nama.Text.Trim();
                 DateTime eventDate = dtp1.Value; // Assuming dtp1 is your DateTimePicker
+                string tempat = tb_tempat.Text.Trim();
 
                 // Call the UpdateDataInTableEvent function
-                UpdateDataInTableEvent(id, eventName, eventDate);
+                UpdateDataInTableEvent(id, eventName, eventDate, tempat);
 
                 // Refresh the DataGridView2 to reflect the changes
                 LoadDataToDataGridView1();
                 tb_id.Text = string.Empty;
                 tb_nama.Text = string.Empty;
+                tb_tempat.Text = string.Empty;
             }
             catch (Exception ex)
             {

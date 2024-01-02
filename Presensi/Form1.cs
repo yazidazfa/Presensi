@@ -194,6 +194,11 @@ namespace Presensi
             tb_password.ForeColor = Color.Black;
             tb_password.PasswordChar = '*';
         }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+
+        }
     }
     public class DatabaseConnector
     {

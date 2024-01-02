@@ -859,5 +859,26 @@ namespace Presensi
         {
             ExportToCSV(dataGridView3);
         }
+
+        private void Admin_Resize(object sender, EventArgs e)
+        {
+            AdjustTabContent();
+        }
+
+        private void AdjustTabContent()
+        {
+            // Example: Resize controls within the active tab page
+            if (tabControl1.SelectedTab == tabPage1)
+            {
+                // Adjust controls within tabPage1
+                // e.g., control1.Width = tabPage1.Width / 2;
+            }
+            else if (tabControl1.SelectedTab == tabPage2)
+            {
+                // Adjust controls within tabPage2
+                // e.g., control2.Dock = DockStyle.Fill;
+            }
+            // Add similar adjustments for other tab pages as needed
+        }
     }
 }

@@ -45,6 +45,7 @@ namespace Presensi
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
             this.btn_clearEvent = new System.Windows.Forms.Button();
             this.btn_deleteEvent = new System.Windows.Forms.Button();
             this.btn_updateEvent = new System.Windows.Forms.Button();
@@ -55,6 +56,7 @@ namespace Presensi
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dtp1 = new System.Windows.Forms.DateTimePicker();
+            this.tb_tempat = new System.Windows.Forms.TextBox();
             this.tb_namaEvent = new System.Windows.Forms.TextBox();
             this.tb_id2 = new System.Windows.Forms.TextBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
@@ -70,8 +72,6 @@ namespace Presensi
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.btn_logout = new System.Windows.Forms.Button();
             this.label_username = new System.Windows.Forms.Label();
-            this.tb_tempat = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -275,6 +275,16 @@ namespace Presensi
             this.tabPage2.Text = "Manage Event";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(409, 374);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(67, 20);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "Tempat:";
+            // 
             // btn_clearEvent
             // 
             this.btn_clearEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -375,6 +385,14 @@ namespace Presensi
             this.dtp1.Name = "dtp1";
             this.dtp1.Size = new System.Drawing.Size(202, 20);
             this.dtp1.TabIndex = 4;
+            // 
+            // tb_tempat
+            // 
+            this.tb_tempat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_tempat.Location = new System.Drawing.Point(528, 371);
+            this.tb_tempat.Name = "tb_tempat";
+            this.tb_tempat.Size = new System.Drawing.Size(202, 26);
+            this.tb_tempat.TabIndex = 2;
             // 
             // tb_namaEvent
             // 
@@ -539,24 +557,6 @@ namespace Presensi
             this.label_username.TabIndex = 2;
             this.label_username.Text = "label5";
             // 
-            // tb_tempat
-            // 
-            this.tb_tempat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_tempat.Location = new System.Drawing.Point(528, 371);
-            this.tb_tempat.Name = "tb_tempat";
-            this.tb_tempat.Size = new System.Drawing.Size(202, 26);
-            this.tb_tempat.TabIndex = 2;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(409, 374);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(67, 20);
-            this.label10.TabIndex = 14;
-            this.label10.Text = "Tempat:";
-            // 
             // Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -565,9 +565,13 @@ namespace Presensi
             this.Controls.Add(this.label_username);
             this.Controls.Add(this.btn_logout);
             this.Controls.Add(this.tabControl1);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1280, 720);
+            this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "Admin";
             this.Text = "Admin";
             this.Load += new System.EventHandler(this.Admin_Load);
+            this.Resize += new System.EventHandler(this.Admin_Resize);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

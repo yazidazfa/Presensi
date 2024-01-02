@@ -140,6 +140,9 @@ namespace Presensi
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label_username3);
             this.Controls.Add(this.btn_logout);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1280, 720);
+            this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "Participant";
             this.Text = "Participant";
             this.tabControl1.ResumeLayout(false);

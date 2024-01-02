@@ -33,12 +33,14 @@ namespace Presensi
             this.label_username = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lbl_tempat = new System.Windows.Forms.Label();
             this.btn_clear1 = new System.Windows.Forms.Button();
             this.btn_update1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dtp1 = new System.Windows.Forms.DateTimePicker();
+            this.tb_tempat = new System.Windows.Forms.TextBox();
             this.tb_nama = new System.Windows.Forms.TextBox();
             this.tb_id = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -50,8 +52,6 @@ namespace Presensi
             this.cb_status = new System.Windows.Forms.ComboBox();
             this.tb_id2 = new System.Windows.Forms.TextBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.tb_tempat = new System.Windows.Forms.TextBox();
-            this.lbl_tempat = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -110,6 +110,16 @@ namespace Presensi
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Manage Event";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lbl_tempat
+            // 
+            this.lbl_tempat.AutoSize = true;
+            this.lbl_tempat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_tempat.Location = new System.Drawing.Point(437, 333);
+            this.lbl_tempat.Name = "lbl_tempat";
+            this.lbl_tempat.Size = new System.Drawing.Size(67, 20);
+            this.lbl_tempat.TabIndex = 8;
+            this.lbl_tempat.Text = "Tempat:";
             // 
             // btn_clear1
             // 
@@ -170,6 +180,14 @@ namespace Presensi
             this.dtp1.Size = new System.Drawing.Size(202, 20);
             this.dtp1.TabIndex = 2;
             // 
+            // tb_tempat
+            // 
+            this.tb_tempat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_tempat.Location = new System.Drawing.Point(571, 330);
+            this.tb_tempat.Name = "tb_tempat";
+            this.tb_tempat.Size = new System.Drawing.Size(202, 26);
+            this.tb_tempat.TabIndex = 1;
+            // 
             // tb_nama
             // 
             this.tb_nama.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -209,7 +227,7 @@ namespace Presensi
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1232, 606);
+            this.tabPage2.Size = new System.Drawing.Size(1232, 603);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Manage Attendance";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -288,24 +306,6 @@ namespace Presensi
             this.dataGridView2.TabIndex = 0;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             // 
-            // tb_tempat
-            // 
-            this.tb_tempat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_tempat.Location = new System.Drawing.Point(571, 330);
-            this.tb_tempat.Name = "tb_tempat";
-            this.tb_tempat.Size = new System.Drawing.Size(202, 26);
-            this.tb_tempat.TabIndex = 1;
-            // 
-            // lbl_tempat
-            // 
-            this.lbl_tempat.AutoSize = true;
-            this.lbl_tempat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_tempat.Location = new System.Drawing.Point(437, 333);
-            this.lbl_tempat.Name = "lbl_tempat";
-            this.lbl_tempat.Size = new System.Drawing.Size(67, 20);
-            this.lbl_tempat.TabIndex = 8;
-            this.lbl_tempat.Text = "Tempat:";
-            // 
             // Operator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,6 +314,9 @@ namespace Presensi
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label_username);
             this.Controls.Add(this.btn_logout);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1280, 720);
+            this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "Operator";
             this.Text = "Operator";
             this.tabControl1.ResumeLayout(false);

@@ -258,6 +258,7 @@ namespace Presensi
 
                 // Refresh the DataGridView2 to reflect the changes
                 LoadDataToDataGridView1();
+                LoadDataToDataGridView2();
                 tb_id.Text = string.Empty;
                 tb_nama.Text = string.Empty;
                 tb_tempat.Text = string.Empty;

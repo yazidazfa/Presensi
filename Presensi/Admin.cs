@@ -435,7 +435,9 @@ namespace Presensi
                 databaseConnector.OpenConnection();
 
                 // Replace 'your_table' with the actual table name
-                string query = "SELECT id AS AttendanceID, eventID, userID, status FROM kehadiran";
+                string query = "SELECT k.id AS AttendanceID, k.eventID, e.nama AS NamaEvent, e.tempat, k.userID, k.status " +
+               $"FROM kehadiran k " +
+               $"INNER JOIN event e ON k.eventID = e.id ";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, databaseConnector.Connection))
                 {
@@ -585,6 +587,7 @@ namespace Presensi
 
             // Refresh the DataGridView to reflect the changes
             LoadDataIntoDataGridView();
+            LoadDataIntoDataGridView3();
 
             tb_id.Text = string.Empty;
             tb_username.Text = string.Empty;
@@ -789,6 +792,7 @@ namespace Presensi
 
                 // Refresh the DataGridView2 to reflect the changes
                 LoadDataIntoDataGridView2();
+                LoadDataIntoDataGridView3();
 
                 tb_id2.Text = string.Empty;
                 tb_namaEvent.Text = string.Empty;

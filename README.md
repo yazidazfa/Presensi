@@ -1,1 +1,2 @@
-test 123
+This is an Attendance App
+
